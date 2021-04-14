@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    EMDS | medicine services
+{% endblock %}
+
+
+{% block content %}
+
+{% load cart %}
+{% load static %}
+
+    <div class="row text-center medicineheader">
+        <div class="col-12">
+            <h2 class="color">Medicines</h2>
+        </div>
+    </div>
+    <hr class="medicinehr">
+
+    <div class="container-fluid medicine">
+        <div class="row">
+            <div class="dropdown col-sm-3 mt-4 xyz">
+                <button class="btn btn-success text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Medicine Categories
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a  class="dropdown-item" href="{% url 'medicineservices' %}">ALL</a>
+                    {% for data in category %}
+                        <a  class="dropdown-item" href="?category={{data.id}}">{{data.name}}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% comment %} Medicines {% endcomment %}
+            <div class="col-sm-9 row">
+                {% for medicine in medicines %}
+                    <div class="card p-4 m-2" id="{{ medicine.medicine_id }}">
+                        <img class="card-img-top" src= " {{ medicine.medicine_pic.url }}" alt="Card image cap" style="height:150px">
+                        <div class="card-body">
+                            <h5 class="card-cat">{{medicine.category.name}} </h5>
+                            <h5 class="card-title">{{medicine.medicine_name}} </h5>
+                            <h5 class="card-title">{{medicine.company_name}} </h5>
+                            <h5 class="card-title">strength:{{medicine.strength}} </h5>
+                            <p id='price' class="card-title">{{medicine.price_BDT}} <span>taka per piece</span></p>
+                            {% if medicine|is_in_cart:request.session.cart_add %}
+                                <div class="card-footer row no-gutters p-0" >
+                                    <form action="" method="POST" class="col-2">
+                                        {% csrf_token %}
+                                        <input hidden type="text" name="addCart"  value="{{medicine.medicine_id}}">
+                                        <input hidden type="text" name="remove"  value="True">
+                                        <input type="submit" value="-"  class="btn-success btn-value1">
+                                    </form>
+                                    <div class="text-center card-title col">{{ medicine|cart_quantity:request.session.cart_add}} Item added </div>
+                                    <form action="" method="POST" class="col-2">
+                                        {% csrf_token %}
+                                        <input hidden type="text" name="addCart"  value="{{medicine.medicine_id}}">
+                                        <input type="submit" value="+"  class="btn-success btn-value2">
+                                    </form>
+                                </div>
+                            {% else %}
+                                <form action="#{{ medicine.medicine_id }}" method="POST">
+                                    {% csrf_token %}
+                                    <input hidden type="text" name="addCart"  value="{{ medicine.medicine_id }}">
+                                    <input type="submit" class="btn btn-success text-light" value="Add to Cart" >
+                                    {% comment %} <button type="submit" >Add to Cart</button> {% endcomment %}
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+<style>
+body{background:#95afc0;}
+.medicine{margin-bottom:100px;}
+.medicineheader{margin-top: 30px;}
+.medicineheader h2{font-size: 2.4rem;}
+.medicinehr{margin-top: 15px; margin-bottom: 55px; border:2px solid #f0f0f0;}
+.medicine .dropdown .btn:not(:disabled):not(.disabled) {
+    cursor: pointer;
+    padding: 2px 15px;
+    margin-left: 30px;
+    transition: 0.5s;
+}
+.xyz .dropdown-menu{
+    left:5px !important;
+    min-width: 13.3rem;
+    border-radius:10px;
+    text-align:center;
+    margin-bottom:8px;
+    border-bottom:1px solid #95afc0;
+}
+.xyz .dropdown-menu .dropdown-item{
+    border-bottom:2px solid #95afc0;
+}
+.xyz .dropdown-menu .dropdown-item:last-child{
+    border-bottom:none;
+}
+.card-title{
+    font-size: 16px;
+    color: #f0f0f0;
+}
+.card-cat{
+    color:gray;
+}
+
+.card{
+    width: 19.4rem;
+    margin: 0 23px 30px 0;
+    border-radius:30px;
+    background: #283747;
+}
+.card-img-top{
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.27);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.27);
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.27);
+    border-radius:20px;
+    border: 1px solid blue;
+}
+.card-body{padding: 1.35rem .60rem .45rem .45rem;}
+.card-body .btn{padding: 0 72px;border:none;border-radius:50px;transition:0.5s;}
+
+input.btn-value1, input.btn-value2{
+    padding: 2px 22px;
+    border:none;
+}
+input.btn-value2{margin-left:-5px;}
+
+</style>
+{% endblock %}

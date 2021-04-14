@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    EMDS | Profile Update
+{% endblock %}
+
+{% block content %}
+    {% load crispy_forms_tags %}
+    <div class="bg-image"></div>
+    <div class="container profileupdate">
+        <div class="heading">
+            Profile update Form
+            <hr class="profileupdateHR">
+        </div>
+        <form class="form-group" enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+            <fieldset>
+                {{ user_update_form | crispy }}
+                {{ profile_update_form | crispy }}
+            </fieldset>
+            <div class="submit">
+                <button class="form-group btn btn-border">
+                    submit
+                </button>
+            </div>
+        </form>
+    </div>
+
+<style>
+    body{background: #95afc0;}
+    .profileupdate{
+        background: linear-gradient(to top, #00ffcc, #009999);
+        box-sizing: border-box;
+        width: 45%;
+        padding:2% 4%;
+        margin-top: 50px;
+        border-radius: 40px;
+        margin-bottom: 100px;
+        box-shadow: 5px 15px 20px 0px rgb(0 0 0 / 27%);
+    }
+    .heading{
+        font-weight: bold;
+        font-size: 26px;
+        text-align: center;
+        color: floralwhite;
+    }
+    .profileupdateHR{
+        width: 100%;
+        margin-top: 13px;
+        margin-bottom: 25px;
+    }
+    .form-control{border-radius:30px;transition:0.6s;}
+    .form-control:focus{background:#c7ecee;border:none;}
+    .submit{
+        text-align: center;
+        margin-top: 20px;
+    }
+
+</style>
+{% endblock %}

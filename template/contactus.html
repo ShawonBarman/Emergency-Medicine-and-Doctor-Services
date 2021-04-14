@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    EMDS | contact us
+{% endblock %}
+
+{% block content %}
+    <section id="contact" class="site-section section-form text-center">
+            <div class="container-fluid">
+                <h2 class="color">Contact Us</h2>
+                <hr>
+                <form action="{% url 'contactus' %}" method="POST" name="form" class="container">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <input type="text" name="name" class="form-control mt-x-0" placeholder="Name">
+                            <div class="error">
+                                {{ error_name }}
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="email" name="email" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="col-sm-12">
+                            <textarea name="message" id="mesaage" class="form-control" placeholder="Message" required></textarea>
+                        </div>
+                    </div>
+                    <div class="submit">
+                        <input type="submit" value="submit" class="btn btn-border">
+                    </div>
+                </form>
+            </div>
+        </section><!-- /.section-form -->
+{% endblock %}

@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    EMDS | cart
+{% endblock %}
+
+{% block content %}
+    {% load cart %}
+    <div class="container cart">
+        <div class="row text-center cartheader">
+            <div class="col-12">
+                <h2 class="color">Your Cart</h2>
+            </div>
+        </div>
+        <hr class="carthr">
+        <table class="table table-borderless rounded-0 table-light" style="text-align:center">
+            <thead >
+                <tr class="table-primary">
+                    <th scope="col">Medicine Image</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for medicine in medicines  %}
+                <tr style="border-top: 3px solid #283747">
+                    <th scope="row"><img class="" style="width:70px;" src="{{ medicine.medicine_pic.url }}" alt="" srcset=""></th>
+                        <td>{{medicine.medicine_name}}</td>
+                        <td>{{medicine|cart_quantity:request.session.cart_add}}</td>
+                        <td>{{medicine|price_total:request.session.cart_add}} {{medicine|custom_sign:request.session.cart_add}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <table class="table table-borderless rounded-0 table-warning" style="margin-top:20px;">
+            <thead class="thead-primary">
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col"class="text-center">Total Price : {{medicines|total_cart_price:request.session.cart_add}} <span>tk</span></th>
+                    <th scope="col" class="text-center"></th>
+                </tr>
+            </thead>
+        </table>
+        <div class="checkoutbotton">
+            <a href="{% url 'check-out' %}" class="btn btn-success text-light" data-toggle="modal" data-target="#modalAbandonedCart">Check-Out</a>
+        </div>
+    </div>
+
+    <!-- Button trigger modal -->
+    <!-- Modal -->
+    <!-- Modal: modalAbandonedCart-->
+    <div class="modal fade right" id="modalAbandonedCart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-info" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header">
+                    <p class="heading">Please Fill The Informattion Bellow</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="white-text">&times;</span>
+                    </button>
+                </div>
+                <!--Body-->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-3">
+                            <p></p>
+                            <p class="text-center text-danger"><i class="fa fa-shopping-cart fa-4x"></i></p>
+                        </div>
+                        <div class="col-9">
+                            <form action="{% url 'check-out' %}" method="POST"  class="form-group" >
+                                {% csrf_token %}
+                                <label>Address :</label>
+                                <input class="form-control" placeholder="Enter Address" type="text" name="address" required>
+                                <label>Phone :</label>
+                                <input class="form-control " placeholder="Enter Phone Number" type="number" name="Phone" required>
+                                <!--Footer-->
+                                <div class="footer">
+                                    <input type="submit" class="btn btn-primary" value="Confirm Order">
+                                    <a type="button" class="btn btn-danger btncancel" data-dismiss="modal">Cancel</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<style>
+    body {
+        background: #283747;
+    }
+    .cartheader{margin-top: 30px;}
+    .cartheader h2{font-size: 2.4rem;}
+    .carthr{margin-top: 15px; margin-bottom: 55px;}
+    .cart{margin-bottom:100px;}
+    .checkoutbotton{margin-top:50px; text-align:center;}
+    .checkoutbotton .btn{
+        padding: 2px 80px;
+        border:none;
+        border-radius: 50px;
+        transition: 0.6s;
+    }
+
+    .modal-header{
+        background-color: darkgrey;
+    }
+    p.heading {
+        color: cornsilk;
+        font-weight: 500;
+        font-size: 22px;
+        margin: 15px;
+    }
+    .modal-header .close {
+        margin: -1rem -0.55rem -1rem auto;
+    }
+    .modal-body {
+        background: linear-gradient(to top, #00FFCB, #009999);
+    }
+    .modal-body label{
+        margin-left: 5px;
+        color: #fff;
+        margin-top: 10px;
+        font-size: 18px;
+    }
+    .modal-body .form-control{border-radius:30px;transition:0.6s;}
+    .modal-body .form-control:focus{background:#c7ecee;border:none;}
+    .modal-body input.btn.btn-primary {
+        font-size: 15px;
+        padding: 0 25px;
+        border-radius: 50px;
+        margin-top: 20px;
+        border: none;
+        transition: 0.5s;
+    }
+    .modal-body a.btn.btn-danger.btncancel {
+        margin: 22px 0 0 15px;
+        border: none;
+        border-radius: 50px;
+        transition: 0.5s;
+    }
+</style>
+
+{% endblock %}

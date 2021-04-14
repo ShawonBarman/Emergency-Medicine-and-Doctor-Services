@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    EMDS | log in
+{% endblock %}
+
+{% block content %}
+    {% load crispy_forms_tags %}
+
+    <div class="container signinform">
+        <div class="heading">
+            Sign in Form
+            <hr>
+        </div>
+        <form action="" class="form-group" method="POST" autocomplete="off">
+            {% csrf_token %}
+            <fieldset>
+                {{ form | crispy }}
+            </fieldset>
+            <div class="submit">
+                <button class="form-group btn btn-border">
+                    sign in
+                </button>
+            </div>
+            <div class="formfooter">
+                Don't have an account? <a href="{% url 'register' %}">Sign up</a> here.
+        </div>
+        </form>
+    </div>
+
+<style>
+    body{background: #283747;}
+    .signinform{
+        box-sizing: border-box;
+        width: 35%;
+        background: linear-gradient(to top, #00ffcc, #009999);
+        padding:2% 4%;
+        margin-top: 50px;
+        border-radius: 5%;
+        margin-bottom: 80px;
+        box-shadow: 5px 15px 20px 0px rgb(0 0 0 / 27%);
+    }
+    .signinform label{
+        font-size: 18px;
+    }
+    .form-control{border-radius:30px;transition:0.6s;}
+    .form-control:focus{background:#c7ecee;border:none;}
+    .heading{
+        font-weight: bold;
+        font-size: 26px;
+        text-align: center;
+        color: floralwhite;
+    }
+    .heading hr{
+        width: 100%;
+        padding:0;
+        margin-top: 10px;
+        border: 1.5px solid floralwhite;
+    }
+    .submit{
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>
+
+{% endblock %}
