@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    EMDS | Appointment Details
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row text-center cartheader">
+            <div class="col-12">
+                <h2 class="color">Appointment Details</h2>
+            </div>
+        </div>
+        <hr class="carthr">
+        <table class="table table-borderless rounded-0 table-light text-center">
+            <thead>
+                <tr class="table-primary">
+                    <th scope="col">Status</th>
+                    <th scope="col">Doctor Name</th>
+                    <th scope="col">ApplyAppointmentDate</th>
+                    <th scope="col">AppointmentDate</th>
+                    <th scope="col">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ap in appointment  %}
+                    <tr style="border-top: 3px solid #283747">
+                        {% if ap.status %}
+                            <th><small class="badge badge-success">Completed</small></th>
+                        {% else %}
+                            <th><small class="badge badge-warning">Pending</small></th>
+                        {% endif %}
+                        <td>{{ap.doctor.doctor_name}}</td>
+                        <td>{{ap.applyAppointmentDate}}</td>
+                        <td>{{ap.appointmentDate}}</td>
+                        <td>{{ap.description}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="table table-borderless rounded-0 table-warning">
+            <thead class="thead-primary">
+
+            </thead>
+        </table>
+    </div>
+
+<style>
+    body {
+        background: #283747;
+    }
+    .cartheader{margin-top: 30px;}
+    .cartheader h2{font-size: 2.4rem;}
+    .carthr{margin-top: 15px; margin-bottom: 55px;}
+</style>
+{% endblock %}

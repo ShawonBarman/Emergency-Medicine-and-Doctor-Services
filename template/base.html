@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            {% block title %}
+            {% endblock %}
+        </title>
+        <!--google fonts linking here-->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+        <!--bootstrap 4 linking here-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'user/style.css' %}">
+        <style>
+            /* CUSTOM RESETS
+            ================================================== */
+            a {
+                transition: color 0.25s ease-in-out;
+                -moz-transition: color 0.25s ease-in-out;
+                -webkit-transition: color 0.25s ease-in-out;
+                -o-transition: color 0.25s ease-in-out;
+                -ms-transition: color 0.25s ease-in-out;
+            }
+            a:focus,
+            a:hover {
+                outline: 0 none;
+                text-decoration: none;
+            }
+
+            h4 {
+                font-size: 20px;
+            }
+            hr{
+                border: 2px solid #b4b4b4;
+                width: 30%;
+                margin-top: 2.2rem;
+                margin-bottom: 2.8rem;
+            }
+
+            /* Buttons */
+            .btn {
+                min-width: 145px;
+                line-height: 50px;
+                padding: 0 30px;
+                font-size: 16px;
+                font-weight: 600;
+                text-transform: uppercase;
+                border-radius: 10px;
+                transition: box-shadow 0.25s;
+                -moz-transition: box-shadow 0.25s ease-in-out;
+                -webkit-transition: box-shadow 0.25s ease-in-out;
+                -o-transition: box-shadow 0.25s ease-in-out;
+                -ms-transition: box-shadow 0.25s ease-in-out;
+            }
+
+            .btn-fill {
+                color: #fff;
+                background-color: #ff214f;
+                transition: 0.7s;
+                margin-right: 5px;
+            }
+
+            .btn-border {
+                background-color: transparent;
+                color: #212121;
+                border: 2px solid #30336b;
+                transition: 0.6s;
+            }
+
+            .btn:hover,
+            .btn:focus {
+                color: #ffbe76;
+                background-color: #30336b;
+                box-shadow: 0px 10px 18px 0px rgba(0, 0, 0, 0.15);
+            }
+
+
+            /* Input fields */
+            .form-control {
+                padding-left: 10px;
+                border: 0;
+                border: 1.6px solid #212121;
+                border-radius: 8px;
+                background-color: transparent;
+                box-shadow: none;
+                outline: 0 none transparent;
+                -webkit-appearance:none;
+             }
+
+            textarea {
+                margin-top: 40px;
+                min-height: 150px;
+                resize: none;
+            }
+
+            .form-control:focus {
+                box-shadow: none;
+                border-bottom-color: #e1e1e1;
+            }
+
+            ::-moz-placeholder,
+            ::-webkit-input-placeholder {
+                font-size: 16px;
+            }
+
+            html, body{
+                margin: 0;
+                padding: 0;
+                font-family: 'Roboto', sans-serif;
+                color: #222;
+                background: #f0f0f0;
+            }
+            .color{color: red;}
+
+            .navbar {
+                padding: .5rem;
+            }
+            .navbar-brand{
+                font-weight: bold;
+                font-size: 1.8em
+            }
+            .navbar ul li a:hover{
+                color: dodgerblue !important;
+            }
+            .dropdown-menu{background: linear-gradient(to top, #00ffcc, #009999)}
+            .dropdown-menu a:hover{
+                border-radius:20px;
+                background-color: blanchedalmond;
+            }
+            .profile .dropdown-menu {
+                top: 100%;
+                left: -6%;
+                font-size: 0.9rem;
+                min-width: 8rem;
+                color: #21252A;
+                text-align: rigth;
+                border: 1px solid rgba(0,0,0,.35);
+                border-radius: 1rem;
+            }
+            .navbar-nav li{
+                padding-left: 1.1rem;
+            }
+            .nav-link{
+                font-size: 1.1em !important;
+                font-weight: 500;
+            }
+
+
+            .copyrights {
+                border-top: 1px dashed rgba(255, 255, 255, 0.1);
+                background-color: #1f1f1f;
+                box-sizing: border-box;
+                width: 100%;
+                text-align: center;
+                padding: 30px 0px;
+                overflow: hidden;
+            }
+
+            .footer-distributed .footer-links {
+                margin: 0 0 10px;
+                text-transform: uppercase;
+                padding: 0;
+            }
+
+            .footer-distributed .footer-links a {
+                display: inline-block;
+                line-height: 1.8;
+                margin: 0 10px 0 10px;
+                text-decoration: none;
+            }
+            .footer-distributed .footer-company-name {
+                font-weight: 300;
+                margin: 0 10px;
+                color: #666;
+                padding: 0;
+            }
+            .footer-distributed a{
+                margin-bottom: 20px;
+                display: inline-block;
+                font-size: 17px;
+            }
+
+
+            .loggedout {
+                margin: 35px 0 100px 10px;
+            }
+            .loggedout p {
+                font-size: 18px;
+                margin: 10px 0;
+            }
+
+            section#contact {margin-top: 50px;}
+            .section-form h3,.section-form .btn {margin: 40px 0;}
+
+            div#profileinfo {
+                margin: 30px 0 50px 0;
+            }
+            #profileinfo .header{
+                color: #30c9e8;
+                text-align: center;
+                margin-bottom: -20px;
+                font-weight: 600;
+                font-size: 28px;
+            }
+
+            .error{
+                display: inline-block;
+                float: left;
+                margin-top: 8px;
+                color: red;
+                padding:3px;
+
+            }
+
+            .doctors img{height:280px}
+            .medicines .card-title{background-color:#f0f0f0;padding:5px;text-align:center;}
+        </style>
+    </head>
+    <body>
+        <!--header part coding starting here-->
+        <!--navbar code starting here-->
+        <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'home' %}">EMDS</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto text-white">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'home' %}">Home<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'aboutus' %}">About Us</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            Services
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'doctorservices' %}">Doctor Service</a>
+                                <a class="dropdown-item" href="{% url 'medicineservices' %}">Medicine Service</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'contactus' %}">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'contactus' %}">Connect Us</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" data-bss-hover-animate="pulse" href="{% url 'cart' %}">Cart <span class="badge badge-info mx-auto" style="font-size:8px;">{{request.session.cart_add.keys|length}}</span> </a>
+                            </li>
+                            <li class="nav-item dropdown profile">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                                profile
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{% url 'profile' %}">View Profile</a>
+                                    <a class="dropdown-item" href="{% url 'appointmentDetails' %}">Appointment<br>Status</a>
+                                    <a class="dropdown-item" href="{% url 'order' %}">Order Status</a>
+                                    <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
+                                </div>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'login' %}">Log in</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'register' %}">register</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!--navbar coding end here-->
+        <!--header part codeing end here-->
+        {% block content %}
+
+        {% endblock %}
+
+        <div class="copyrights">
+            <div class="container">
+                <div class="footer-distributed">
+                    <a href="{% url 'home' %}">Emergency Medicine and Doctor Services</a>
+                    <div class="footer-center">
+                        <p class="footer-links">
+                            <a href="{% url 'home' %}">Home</a>
+                            <a href="{% url 'aboutus' %}">About Us</a>
+                            <a href="{% url 'medicineservices' %}">Medicine service</a>
+                            <a href="{% url 'doctorservices' %}">Doctor service</a>
+                            <a href="{% url 'home' %}">Blog</a>
+                            <a href="{% url 'contactus' %}">Contact Us</a>
+                        </p>
+                        <p class="footer-company-name">All Rights Reserved. &copy; 2021 <a href="{% url 'home' %}">EMDS</a> Design By :
+                        <a href="{% url 'aboutus' %}">Shawon, Nabiha, & Jesmin</a></p>
+                    </div>
+                </div>
+            </div><!-- end container -->
+        </div><!-- end copyrights -->
+
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <!--font-awesome linking here-->
+        <script src="http://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    </body>
+</html>

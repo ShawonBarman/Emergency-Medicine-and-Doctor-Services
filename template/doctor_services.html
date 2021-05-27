@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    EMDS | doctor service
+{% endblock %}
+
+{% block content %}
+    {% load static %}
+    <section class="doctors">
+        <div class="container-fluid">
+            <div class="row text-center doctorheader">
+                <div class="col-12">
+                    <h2 id="team" class="color">Doctors</h2>
+                </div>
+            </div>
+            <hr class="doctorhr">
+        </div>
+        <!--card code starting here-->
+        <div class="container-fluid padding">
+            <div class="row padding">
+                {% for doctor in doctors %}
+                    {% if doctor.doctor_id > 101 %}
+                        <div class="col-md-4">
+                            <div class="card m-2 p-3" id="{{ doctor.doctor_id }}">
+                                <img class="card-img-top" src="{{ doctor.profile_pic.url }}" alt="Card image">
+                                <div class="card-body">
+                                    <h4 class="card-title">{{ doctor.name }}</h4>
+                                    <p class="card-text">Specialist: {{ doctor.specialist }}.</p>
+                                    <p class="card-text">Schedule: {{ doctor.schedule }}</p>
+                                    <p class="card-text">Address: {{ doctor.address }}</p>
+                                    <form action="#{{ doctor.doctor_id }}" method="POST">
+                                        {% csrf_token %}
+                                        <input hidden type="text" name="addCart"  value="{{ doctor.doctor_id }}">
+                                        <input hidden type="submit" class="btn btn-success text-light" data-toggle="modal" data-target="#modalAbandonedCart" value="Take Appointment">
+                                        <div class="checkoutbotton">
+                                            <a  href="{% url 'appointmentCheck-out' %}" class="btn btn-success text-light" data-toggle="modal" data-target="#modalAbandonedCart">Take Appointment</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade right" id="modalAbandonedCart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-info" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header">
+                    <p class="heading">Please Fill The Informattion Bellow</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="white-text">&times;</span>
+                    </button>
+                </div>
+                <!--Body-->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <form action="{% url 'appointmentCheck-out' %}" method="POST"  class="form-group" >
+                                {% csrf_token %}
+                                <label>Full Name :</label>
+                                <input class="form-control" placeholder="Enter Full Name" type="text" name="name" required>
+                                <label>Address :</label>
+                                <input class="form-control" placeholder="Enter Address" type="text" name="address" required>
+                                <label>Phone :</label>
+                                <input class="form-control " placeholder="Enter Phone Number" type="number" name="Phone" required>
+                                <label>Description :</label>
+                                <input class="form-control" placeholder="Tell your problem (optional)" type="text" name="description">
+                                <!--Footer-->
+                                <div class="footer">
+                                    <button type="submit" class="btn btn-primary" name="doctor_id" value="{{doctor.doctor_id}}">Confirm Appointment</button>
+
+                                    <a type="button" class="btn btn-danger btncancel" data-dismiss="modal">Cancel</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<style>
+    section.doctors {
+        margin-top: 50px;
+        margin-bottom: 100px;
+    }
+    hr.doctorhr {
+        margin-top: 15px;
+        margin-bottom: 40px;
+    }
+    .card{
+        width: 26rem;
+        margin: 0 20px 30px 0;
+        border-radius:30px;
+        background: #283747;
+    }
+    .card .card-img-top{
+        border-radius:30px;
+        height:220px;
+        -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.27);
+        -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.27);
+        box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.27);
+        border: 1px solid blue;
+    }
+    .card-title{
+        font-size: 18px;
+        color: #f0f0f0;
+    }
+    .card-text{
+        font-size: 15px;
+        color: #f0f0f0;
+    }
+    .card-body a.btn.btn-success {
+        padding: 0 65px;
+        border-radius: 50px;
+        margin-left: 23px;
+        border:none;
+        transition: 0.6s;
+    }
+    .modal-header{
+        background-color: darkgrey;
+    }
+    p.heading {
+        color: cornsilk;
+        font-weight: 500;
+        font-size: 22px;
+        margin: 15px;
+    }
+    .modal-header .close {
+        margin: -1rem -0.55rem -1rem auto;
+    }
+    .modal-body {
+        background: linear-gradient(to top, #00FFCB, #009999);
+    }
+    .modal-body label{
+        margin-left: 5px;
+        color: #fff;
+        margin-top: 10px;
+        font-size: 18px;
+    }
+    .modal-body .form-control{border-radius:30px;transition:0.6s;}
+    .modal-body .form-control:focus{background:#c7ecee;border:none;}
+    .modal-body input.btn.btn-primary {
+        font-size: 15px;
+        padding: 0 25px;
+        border-radius: 50px;
+        margin-top: 24px;
+        border: none;
+        transition: 0.5s;
+    }
+    .modal-body a.btn.btn-danger.btncancel {
+        margin: 25px 0 0 0;
+        border: none;
+        border-radius: 50px;
+        transition: 0.5s;
+        float:right;
+    }
+</style>
+{% endblock %}

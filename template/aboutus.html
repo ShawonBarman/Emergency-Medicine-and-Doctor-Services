@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    EMDS | aboutus
+{% endblock %}
+
+{% block content %}
+    {% load static %}
+    <div class="aboutus container">
+        <div class="member1">
+            <div class="header color">About for first member</div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="{% static 'user/img/shawon.jpg' %}" alt="ShawonBarman">
+                </div>
+                <div class="col-md-6">
+                    <p>
+                        <span>"</span>Hello! I'm Shawon Barman. I'm form Keraniganj, Dhaka. I'm currently a student at the University of Asia Pacific in the CSE department. I'm a full stack web developer, a flutter app developer, a programmer, and a graphic designer.<span>"</span>
+                    </p>
+                    <a href="https://shawonbarman.github.io/myPortfolio/" class="btn btn-border">See Profile</a>
+                </div>
+            </div>
+        </div>
+        <div class="member2">
+            <div class="header color">About for Second member</div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="{% static 'user/img/nabiha.jpg' %}" alt="NabihaTahsin">
+                </div>
+                <div class="col-md-6">
+                    <p>
+                        <span>"</span>Hello! I'm Nabiha Tahsin. I'm form Dhanmondhi-10, Dhaka. I'm currently a student at the University of Asia Pacific in the CSE department. I'm a web design, a programmer, and a UI/UX designer.<span>"</span>
+                    </p>
+                    <a href="https://github.com/NabihaTahsin/portfolio#portfolio" class="btn btn-border">See Profile</a>
+                </div>
+            </div>
+        </div>
+        <div class="member3">
+            <div class="header color">About for Third member</div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="{% static 'user/img/jesmin.jpg' %}" alt="JesminAkter">
+                </div>
+                <div class="col-md-6">
+                    <p>
+                        <span>"</span>Hello! I'm Jesmin AKter. I'm form Azimpur, Dhaka. I'm currently a student at the University of Asia Pacific in the CSE department. I'm a Front-End Web Developer, and a programmer.<span>"</span>
+                    </p>
+                    <a href="https://jas-tultul044.github.io/portfolio/" class="btn btn-border">See Profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<style>
+    .aboutus.container {
+        margin-top: 60px;
+        margin-bottom: 100px;
+    }
+    .aboutus .header {
+         text-align: center;
+         margin-bottom: -10px;
+         font-weight: 600;
+         font-size: 30px;
+    }
+    .aboutus hr {
+         width: 40%;
+         margin-bottom: 70px;
+    }
+    .aboutus .member2{margin-top: 90px;}
+    .aboutus .member3{margin-top: 80px;}
+    .aboutus p {
+        font-size: 18px;
+        text-align: justify;
+        margin-top: 25px;
+    }
+    .aboutus span{
+        font-size: 25px;
+        font-weight: 500;
+    }
+    .aboutus img{ width:500px;}
+</style>
+{% endblock %}

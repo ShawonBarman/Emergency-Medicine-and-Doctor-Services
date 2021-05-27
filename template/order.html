@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    EMDS | Order Details
+{% endblock %}
+
+{% block content %}
+    {% load cart %}
+    <div class="container">
+        <div class="row text-center cartheader">
+            <div class="col-12">
+                <h2 class="color">Order Details</h2>
+            </div>
+        </div>
+        <hr class="carthr">
+        <table class="table table-borderless rounded-0 table-light text-center">
+            <thead>
+                <tr class="table-primary">
+                    <th scope="col">Status</th>
+                    <th scope="col">Medicine Name</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders  %}
+                    <tr style="border-top: 3px solid #283747">
+                        {% if order.status %}
+                            <th><small class="badge badge-success">Completed</small></th>
+                        {% else %}
+                            <th><small class="badge badge-warning">Pending</small></th>
+                        {% endif %}
+                        <td>{{order.medicine.medicine_name}}</td>
+                        <td>{{order.quantity}}</td>
+                        <td>{{order.date}}</td>
+                        <td>{{order.quantity|multiply:order.price}}{{order|custom_sign:request.session.cart_add}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="table table-borderless rounded-0 table-warning">
+            <thead class="thead-primary">
+
+            </thead>
+        </table>
+    </div>
+
+
+<style>
+    body {
+        background: #283747;
+    }
+    .cartheader{margin-top: 30px;}
+    .cartheader h2{font-size: 2.4rem;}
+    .carthr{margin-top: 15px; margin-bottom: 55px;}
+</style>
+{% endblock %}
